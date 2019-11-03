@@ -377,18 +377,15 @@ namespace XBee
         }
 
         /// <summary>
-        /// Sets the Personal Area Network (PAN) ID.  To commit changes to non-volatile memory, use <see cref="XBeeNode.WriteChangesAsync"/>.
+        /// Gets the Personal Area Network (PAN) ID./>.
         /// </summary>
-        /// <param name="id">The PAN ID to assign to this node.</param>
-        /// <returns></returns>
-        public Task SetPanIdAsync(ulong id)
+        /// <returns>The node's PAN ID (ID Command)</returns>
+        public async Task<ushort?> GetPanIdAsync()
         {
-            if (Protocol == XBeeProtocol.Raw || Protocol == XBeeProtocol.DigiMesh)
-            {
-                throw new InvalidOperationException("Protocol mismatch.  Try SetPanIdAsync(ushort).");
-            }
-
-            return ExecuteAtCommandAsync(new PanIdCommandExt(id));
+            var response =
+                await ExecuteAtQueryAsync<PrimitiveResponseData<PanIdResponseData>>(new PanIdCommand())
+                    .ConfigureAwait(false);
+            return response.Value.Id;
         }
 
         /// <summary>
