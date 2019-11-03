@@ -233,12 +233,23 @@ namespace XBee.Core
 
                 var signalStrength = discoveryData.ReceivedSignalStrengthIndicator?.SignalStrength;
 
-                NodeDiscovered?.Invoke(this,
-                    new NodeDiscoveredEventArgs(discoveryData.Name, signalStrength,
-                        node));
+                if (signalStrength != null)
+                {
+                    NodeDiscovered?.Invoke(this,
+                        new NodeDiscoveredEventArgs(discoveryData.Name, signalStrength,
+                            node));
+                }
+                else
+                {
+                    NodeDiscovered?.Invoke(this,
+                        new NodeDiscoveredEventArgs(discoveryData.Name, 0,
+                            node));
+                }
+
             }
             catch (TimeoutException)
             {
+                System.Diagnostics.Debug.WriteLine("Node info timeout!");
                 /* if we timeout getting the remote node info, no need to bubble up.  
                              * We just won't include the node in discovery */
             }

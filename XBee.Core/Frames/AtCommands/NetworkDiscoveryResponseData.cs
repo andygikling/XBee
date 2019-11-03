@@ -10,14 +10,20 @@ namespace XBee.Frames.AtCommands
         [FieldOrder(1)]
         public LongAddress LongAddress { get; set; }
 
-        [FieldOrder(2)]
-        [SerializeWhen("Protocol", XBeeProtocol.Raw, RelativeSourceMode = RelativeSourceMode.SerializationContext)]
+        //Note sure when it happened but...
+        //This works for XBee Pro (SB3) 900HP with Firmware version 8075 in DigiMesh mode.
+        //Seems they have changed the response!  The signal strength is no longer found in this position!
+        //Also, does the FieldOrder attribute number work correctly if this SerializeWhen decides the value should not be serialized?  Or is the FieldOrder off by 1?
+        //Test this...
+        //[FieldOrder(2)]
+        [Ignore]
+        //[SerializeWhen("Protocol", XBeeProtocol.Raw, RelativeSourceMode = RelativeSourceMode.SerializationContext)]
         public ReceivedSignalStrengthIndicator ReceivedSignalStrengthIndicator { get; set; }
 
-        [FieldOrder(3)]
+        [FieldOrder(2)]
         public string Name { get; set; }
 
-        [FieldOrder(4)]
+        [FieldOrder(3)]
         public NetworkDiscoveryResponseDataExtendedInfo ExtendedInfo { get; set; }
 
         [Ignore]
