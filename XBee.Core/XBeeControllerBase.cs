@@ -231,20 +231,20 @@ namespace XBee.Core
             {
                 var node = await GetNodeAsync(address);
 
-                var signalStrength = discoveryData.ReceivedSignalStrengthIndicator?.SignalStrength;
-
-                if (signalStrength != null)
-                {
-                    NodeDiscovered?.Invoke(this,
-                        new NodeDiscoveredEventArgs(discoveryData.Name, signalStrength,
-                            node));
-                }
-                else
-                {
+                //var signalStrength = discoveryData.ReceivedSignalStrengthIndicator?.SignalStrength;
+                //
+                //if (signalStrength != null)
+                //{
+                //    NodeDiscovered?.Invoke(this,
+                //        new NodeDiscoveredEventArgs(discoveryData.Name, signalStrength,
+                //            node));
+                //}
+                //else
+                //{
                     NodeDiscovered?.Invoke(this,
                         new NodeDiscoveredEventArgs(discoveryData.Name, 0,
                             node));
-                }
+                //}
 
             }
             catch (TimeoutException)

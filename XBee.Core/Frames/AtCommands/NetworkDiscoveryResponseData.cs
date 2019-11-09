@@ -4,6 +4,9 @@ namespace XBee.Frames.AtCommands
 {
     internal class NetworkDiscoveryResponseData : AtCommandResponseFrameData
     {
+        //[FieldOrder(0)]
+        //public ushort My { get; set; }
+        
         [FieldOrder(0)]
         public ShortAddress ShortAddress { get; set; }
 
@@ -16,9 +19,9 @@ namespace XBee.Frames.AtCommands
         //Also, does the FieldOrder attribute number work correctly if this SerializeWhen decides the value should not be serialized?  Or is the FieldOrder off by 1?
         //Test this...
         //[FieldOrder(2)]
-        [Ignore]
-        //[SerializeWhen("Protocol", XBeeProtocol.Raw, RelativeSourceMode = RelativeSourceMode.SerializationContext)]
-        public ReceivedSignalStrengthIndicator ReceivedSignalStrengthIndicator { get; set; }
+        //[Ignore]
+        ////[SerializeWhen("Protocol", XBeeProtocol.Raw, RelativeSourceMode = RelativeSourceMode.SerializationContext)]
+        //public ReceivedSignalStrengthIndicator ReceivedSignalStrengthIndicator { get; set; }
 
         [FieldOrder(2)]
         public string Name { get; set; }

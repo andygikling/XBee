@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -32,6 +33,8 @@ namespace XBee
 
         public override int Read(byte[] buffer, int offset, int count)
         {
+            //This is getting called when the ND command is sent - why?
+
             //Note, it's not clear why BinarySerializer ends up calling this method.
             //The following is a work around which needs review.
 
@@ -71,7 +74,21 @@ namespace XBee
 
             var data = await _serialDevice.ReadAsync((uint)count, cancellationToken).ConfigureAwait(false);
             Array.Copy(data, buffer, data.Length);
+
+            System.Diagnostics.Debug.WriteLine("Rx - " + ByteArrayToString(data));
+
             return data.Length;
+        }
+
+        public static string ByteArrayToString(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+            {
+                hex.AppendFormat("{0:x2}", b);
+                hex.Append(" ");
+            }
+            return hex.ToString();
         }
 
         public override void Write(byte[] buffer, int offset, int count)
@@ -95,6 +112,8 @@ namespace XBee
             {
                 Array.Resize(ref buffer, count);
             }
+
+            System.Diagnostics.Debug.WriteLine("Tx - " + ByteArrayToString(buffer));
 
             _serialDevice.Write(buffer);
         }
