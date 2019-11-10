@@ -47,7 +47,7 @@ namespace XBee.Core
 
         protected readonly ISerialDevice SerialDevice;
 
-        private static readonly BinarySerializer Serializer = new BinarySerializer {Endianness = Endianness.Big};
+        private readonly BinarySerializer Serializer;
 
         private byte _frameId = byte.MinValue;
 
@@ -60,6 +60,9 @@ namespace XBee.Core
         protected XBeeControllerBase(ISerialDevice serialDevice)
         {
             SerialDevice = serialDevice;
+
+            Serializer = new BinarySerializer();
+            Serializer.Endianness = Endianness.Big;
 
 #if DEBUG
             Serializer.MemberDeserialized += OnMemberDeserialized;
@@ -78,6 +81,7 @@ namespace XBee.Core
         {
             _sampleSource.Dispose();
             _receivedDataSource.Dispose();
+            _listenerCancellationTokenSource?.Dispose();
         }
 
         /// <summary>
