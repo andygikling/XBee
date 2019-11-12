@@ -13,12 +13,15 @@ namespace XBee.Universal
     /// </summary>
     public class XBeeController : XBeeControllerBase
     {
+        SerialDevice serialDeviceHandle;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serialDevice"></param>
         public XBeeController(SerialDevice serialDevice) : base(new SerialDeviceWrapper(serialDevice))
         {
+            serialDeviceHandle = serialDevice;
         }
 
         /// <summary>
@@ -85,6 +88,16 @@ namespace XBee.Universal
             }
 
             return null;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            //NOTE, it's really important to correctly dispose this object.  The UWP talks about needing to 
+            //correctly dispose it.
+            //If you don't, you will frequently see UWP serial port crazyness the next time you run this app!
+            serialDeviceHandle.Dispose();
         }
     }
 }

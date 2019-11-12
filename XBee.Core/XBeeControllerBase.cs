@@ -64,12 +64,12 @@ namespace XBee.Core
             Serializer = new BinarySerializer();
             Serializer.Endianness = Endianness.Big;
 
-#if DEBUG
-            Serializer.MemberDeserialized += OnMemberDeserialized;
-            Serializer.MemberDeserializing += OnMemberDeserializing;
-            Serializer.MemberSerialized += OnMemberSerialized;
-            Serializer.MemberSerializing += OnMemberSerializing;
-#endif
+//#if DEBUG
+//            Serializer.MemberDeserialized += OnMemberDeserialized;
+//            Serializer.MemberDeserializing += OnMemberDeserializing;
+//            Serializer.MemberSerialized += OnMemberSerialized;
+//            Serializer.MemberSerializing += OnMemberSerializing;
+//#endif
         }
 
         /// <summary>
