@@ -75,7 +75,7 @@ namespace XBee
             var data = await _serialDevice.ReadAsync((uint)count, cancellationToken).ConfigureAwait(false);
             Array.Copy(data, buffer, data.Length);
 
-            System.Diagnostics.Debug.WriteLine("Rx - " + ByteArrayToString(data));
+            //System.Diagnostics.Debug.WriteLine("Rx - " + ByteArrayToString(data));
 
             return data.Length;
         }
@@ -113,7 +113,7 @@ namespace XBee
                 Array.Resize(ref buffer, count);
             }
 
-            System.Diagnostics.Debug.WriteLine("Tx - " + ByteArrayToString(buffer));
+            //System.Diagnostics.Debug.WriteLine("Tx - " + ByteArrayToString(buffer));
 
             _serialDevice.Write(buffer);
         }
